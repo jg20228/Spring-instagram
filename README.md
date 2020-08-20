@@ -2,8 +2,8 @@
 
 ## 의존성
 
-![image](https://user-images.githubusercontent.com/62128942/90703489-e3b75180-e2c8-11ea-95ae-d60e6fd6da9d.png)
 ![image](https://user-images.githubusercontent.com/62128942/90703499-e9149c00-e2c8-11ea-9d54-26b5014264ca.png)
+![image](https://user-images.githubusercontent.com/62128942/90703489-e3b75180-e2c8-11ea-95ae-d60e6fd6da9d.png)
 
 ## MySQL 세팅
 
