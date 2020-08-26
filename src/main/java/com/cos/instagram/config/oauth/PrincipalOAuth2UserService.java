@@ -2,6 +2,8 @@ package com.cos.instagram.config.oauth;
 
 import java.util.function.Supplier;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 import com.cos.instagram.config.auth.PrincipalDetails;
+import com.cos.instagram.config.auth.dto.LoginUser;
 import com.cos.instagram.domain.user.User;
 import com.cos.instagram.domain.user.UserRepository;
 import com.cos.instagram.domain.user.UserRole;
@@ -29,6 +32,10 @@ public class PrincipalOAuth2UserService extends DefaultOAuth2UserService {
 	
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+	@Autowired
+	private HttpSession session;
+
 
 	private static final Logger log = LoggerFactory.getLogger(PrincipalOAuth2UserService.class);
 
@@ -72,6 +79,8 @@ public class PrincipalOAuth2UserService extends DefaultOAuth2UserService {
 				return userRepository.save(user);
 			}
 		});
+		
+		session.setAttribute("loginUser", new LoginUser(userEntity));
 		return userEntity;
 		//페이스북만 할때 이렇게 할 것, 구글이 있다면 그전에 만들었던것을 참고해서 만들자.
 	}
