@@ -1,23 +1,35 @@
 package com.cos.instagram.test;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.cos.instagram.config.auth.PrincipalDetails;
 import com.cos.instagram.config.handler.ex.MyUsernameNotFoundException;
 
 @Controller
 public class IndexController {
 	
-	@GetMapping({"/",""})
-	public String home() {
-		return "image/feed";
+	@GetMapping("/test/facebook")
+	public @ResponseBody String facebook(Authentication authentication) {
+		System.out.println("authentication : "+authentication.getPrincipal());//여기서는 getUser가 안됨
+		System.out.println("authentication : "+authentication.getDetails());
+		OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
+		System.out.println("authentication : "+oAuth2User.getAttributes());
+		//System.out.println("authentication : "+principalDetails.getUser());
+		return "facebook 로그인 완료";
 	}
 	
-	@GetMapping("image/feed")
-	public String feed() {
-		return "image/feed";
+	@GetMapping("/test/facebook2")
+	public @ResponseBody String facebook2(
+			@AuthenticationPrincipal UserDetails principal) {
+		System.out.println(principal.getUsername());
+		return "facebook 로그인 완료";
 	}
 
 	@GetMapping("test/login")

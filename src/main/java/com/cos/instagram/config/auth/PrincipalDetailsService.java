@@ -22,10 +22,11 @@ public class PrincipalDetailsService implements UserDetailsService{
 	private final UserRepository userRepository;
 	
 	//Security Session > Authentication > UserDetails
+	//정상적으로 리턴 되면 @AuthenticationPrincipal을 사용 가능함.
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		log.info("UserDetailsService loadUserByUsername 진입");
-		
+		//여기서 머스태치를 쓸려면 세션을 추가로 저장하면된다.
 		User userEntity = 
 				userRepository.findByUsername(username).get();
 		return new PrincipalDetails(userEntity);

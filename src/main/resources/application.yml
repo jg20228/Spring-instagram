@@ -32,6 +32,17 @@ spring:
     user:
       name: cos
       password: 1234   
+      
+    oauth2:
+      client:
+        registration:
+          facebook:
+            client-id: 
+            client-secret: 
+            scope:
+            - email
+            - public_profile
+          
 
 cos:
   secret: 겟인데어

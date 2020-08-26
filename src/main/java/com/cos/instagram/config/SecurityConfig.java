@@ -7,6 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -16,12 +17,16 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 
+import com.cos.instagram.config.oauth.PrincipalOAuth2UserService;
 import com.cos.instagram.util.Script;
 
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
+	
+	@Autowired
+	private PrincipalOAuth2UserService principalOAuth2UserService;
 	
 	@Bean
 	public BCryptPasswordEncoder encode() {
@@ -46,7 +51,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			.formLogin()
 			.loginPage("/auth/loginForm")//login이나 join은 인증이 필요없음 
 			.loginProcessingUrl("/auth/login")
-			.defaultSuccessUrl("/image/feed") //최초의 요청시에따라서 다르게 됨 
+			.defaultSuccessUrl("/") //최초의 요청시에따라서 다르게 됨 
 			.failureHandler(new AuthenticationFailureHandler() {
 				
 				@Override
@@ -58,11 +63,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 					return;
 				}
 			})
+			
 		.and()
-		.logout()
-		.logoutUrl("/auth/logout")
-		.logoutSuccessUrl("/auth/loginForm") //default
+			.logout()
+			.logoutUrl("/auth/logout")
+			.logoutSuccessUrl("/auth/loginForm") //default
+		.and()
+			.oauth2Login() // oauth 요청 주소가 다 활성화
+			.userInfoEndpoint() //oauth 로그인 성공 이후 사용자 정보를 가져오기위한 설정 담당
+			.userService(principalOAuth2UserService) // 담당할 서비스를 등록함. (로그인 후 후처리 되는 곳)
 		;
 	}
-
 }
