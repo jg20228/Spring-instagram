@@ -63,8 +63,8 @@ public class PrincipalOAuth2UserService extends DefaultOAuth2UserService {
 		String password = bCryptPasswordEncoder.encode(cosSecret);
 		String email = oAuth2User.getAttribute("email");
 		
+		//Optional을 쓴 이유
 		User userEntity = userRepository.findByUsername(username).orElseGet(new Supplier<User>() {
-			//Optional을 쓴 이유
 			@Override
 			public User get() {
 				// 회원가입
