@@ -23,4 +23,10 @@ public class LoginUser {
 		this.porvider = user.getProvider();
 		this.porviderId = user.getProviderId();
 	}
+	
+	public User getUser() {
+		return User.builder()
+				.id(id)
+				.build();
+	}
 }
