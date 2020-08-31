@@ -4,13 +4,17 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.MethodParameter;
+import org.springframework.core.io.PathResource;
 import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.resource.PathResourceResolver;
 
 import com.cos.instagram.config.auth.Cos;
 import com.cos.instagram.config.auth.LoginUserAnnotation;
@@ -71,5 +75,23 @@ public class WebMvcConfig implements WebMvcConfigurer{
 				return httpSession.getAttribute("loginUser");
 			}
 		});
+	}
+	
+	@Value("${file.path}")
+	private String uploadFolder;
+	
+	//뷰에서 이미지 엑박뜨는것 때문에 upload폴더를 지정해주는 곳
+	@Override 
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		WebMvcConfigurer.super.addResourceHandlers(registry);
+		
+		registry
+			.addResourceHandler("/upload/**")
+			.addResourceLocations("file:///"+uploadFolder)
+			.setCachePeriod(3600) //한번 읽었으면 1시간동안 캐싱되어있는것을 들고옴
+			.resourceChain(true)
+			.addResolver(new PathResourceResolver());
+		
+		//static에다가 이미지를 업로드하면 X박스 뜸
 	}
 }

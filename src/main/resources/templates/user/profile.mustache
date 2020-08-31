@@ -10,144 +10,73 @@
 		</div>
 		<div class="profile__info">
 			<div class="profile__title">
-				<h1>serranoarevalo</h1>
+				<h1>{{dto.userEntity.username}}</h1>
 				
-				<a href="#">
-					<button class="profile_edit_btn">팔로우</button>
-				</a>
-				<a href="#">
-					<button class="profile_edit_btn">회원수정</button>
-				</a>
-				<a href="/image/uploadForm">	
-					<button class="profile_edit_btn">사진등록</button>
-					<i class="fa fa-cog fa-lg"></i>
-				</a> 
+				{{^dto.pageHost}} <!-- 페이지의 주인은 팔로우가 나오면 안된다. -->				
+					<a href="#">
+						<button class="profile_edit_btn">팔로우</button>
+					</a>
+				{{/dto.pageHost}}				
+				
+				{{#dto.pageHost}} <!--  페이지의 주인이면 -->
+					<a href="#">
+						<button class="profile_edit_btn">회원수정</button>
+					</a>
+					<a href="/image/uploadForm">	
+						<button class="profile_edit_btn">사진등록</button>
+					</a> 
+					<a href="#">
+						<i class="fa fa-cog fa-lg"></i>
+					</a>
+				{{/dto.pageHost}}
+				
 			</div>
 			<ul class="profile__stats">
-				<li class="profile__stat"><span class="profile__stat-number">313</span>
+				<li class="profile__stat"><span class="profile__stat-number">{{dto.imageConut}}</span>
 					posts</li>
-				<li class="profile__stat"><span class="profile__stat-number">4,444</span>
+				<li class="profile__stat"><span class="profile__stat-number">{{dto.followerCount}}</span>
 					followers</li>
-				<li class="profile__stat"><span class="profile__stat-number">44</span>
+				<li class="profile__stat"><span class="profile__stat-number">{{dto.followingCount}}</span>
 					following</li>
 			</ul>
 			<p class="profile__bio">
-				<span class="profile__fullname">Nicolás Serrano Arévalo</span> Lorem
-				ipsum dolor sit amet, consectetur adipisicing elit. Voluptas
-				repellendus cumque quo voluptatum voluptatem, maxime nobis. Quae
-				incidunt cum expedita facilis libero officiis, delectus inventore
-				tempore, ex nulla dolore cumque. <a href="http://serranoarevalo.com"
-					class="profile__link">serranoarevalo.com</a>
+				<span class="profile__fullname">
+					{{dto.userEntity.name}}
+				</span> 
+				
+				<span> <!-- null값이 있을까봐 -->
+					{{#dto.userEntity.bio}}
+						{{dto.userEntity.bio}}
+					{{/dto.userEntity.bio}}
+				</span>
+				<br/><br/>
+				
+				{{#dto.userEntity.website}}
+					<a href="{{dto.userEntity.website}}" class="profile__link">
+						{{dto.userEntity.website}}
+					</a>
+				{{/dto.userEntity.website}}
 			</p>
 		</div>
 	</header>
-	<div class="profile__photo-grid">
-		<div class="profile__photo-row">
-			<div class="profile__photo">
-				<a href="image-detail.html"> <img src="/images/feedPhoto.jpg">
+		<div class="profile__photo-grid">
+			<!-- 유저가 업로드한 Feed 사진 -->
+			{{#dto.imageEntity}}<!-- 컬렉션이면 for문 아니면 if문 -->
+				<div class="profile__photo">
+					<a href="#">
+						<img src="/upload/{{imageUrl}}">					
+					</a>
 					<div class="profile__photo-overlay">
-						<span class="profile__photo-stat"> <i class="fa fa-heart"></i>
-							504
-						</span> <span class="profile__photo-stat"> <i
-							class="fa fa-comment"></i> 22
+						<span class="profile__photo-stat">
+							<i class="fa fa-heart"></i>50
+						</span>
+						<span class="profile__photo-stat">
+							<i class="fa fa-comment"></i>30
 						</span>
 					</div>
-				</a>
-			</div>
-			<div class="profile__photo">
-				<a href="image-detail.html"> <img src="/images/feedPhoto.jpg">
-					<div class="profile__photo-overlay">
-						<span class="profile__photo-stat"> <i class="fa fa-heart"></i>
-							504
-						</span> <span class="profile__photo-stat"> <i
-							class="fa fa-comment"></i> 22
-						</span>
-					</div>
-				</a>
-			</div>
-			<div class="profile__photo">
-				<a href="image-detail.html"> <img src="/images/feedPhoto.jpg">
-					<div class="profile__photo-overlay">
-						<span class="profile__photo-stat"> <i class="fa fa-heart"></i>
-							504
-						</span> <span class="profile__photo-stat"> <i
-							class="fa fa-comment"></i> 22
-						</span>
-					</div>
-				</a>
-			</div>
+				</div>			
+			{{/dto.imageEntity}}
 		</div>
-		<div class="profile__photo-row">
-			<div class="profile__photo">
-				<a href="image-detail.html"> <img src="/images/feedPhoto.jpg">
-					<div class="profile__photo-overlay">
-						<span class="profile__photo-stat"> <i class="fa fa-heart"></i>
-							504
-						</span> <span class="profile__photo-stat"> <i
-							class="fa fa-comment"></i> 22
-						</span>
-					</div>
-				</a>
-			</div>
-			<div class="profile__photo">
-				<a href="image-detail.html"> <img src="/images/feedPhoto.jpg">
-					<div class="profile__photo-overlay">
-						<span class="profile__photo-stat"> <i class="fa fa-heart"></i>
-							504
-						</span> <span class="profile__photo-stat"> <i
-							class="fa fa-comment"></i> 22
-						</span>
-					</div>
-				</a>
-			</div>
-			<div class="profile__photo">
-				<a href="image-detail.html"> <img src="/images/feedPhoto.jpg">
-					<div class="profile__photo-overlay">
-						<span class="profile__photo-stat"> <i class="fa fa-heart"></i>
-							504
-						</span> <span class="profile__photo-stat"> <i
-							class="fa fa-comment"></i> 22
-						</span>
-					</div>
-				</a>
-			</div>
-		</div>
-		<div class="profile__photo-row">
-			<div class="profile__photo">
-				<a href="image-detail.html"> <img src="/images/feedPhoto.jpg">
-					<div class="profile__photo-overlay">
-						<span class="profile__photo-stat"> <i class="fa fa-heart"></i>
-							504
-						</span> <span class="profile__photo-stat"> <i
-							class="fa fa-comment"></i> 22
-						</span>
-					</div>
-				</a>
-			</div>
-			<div class="profile__photo">
-				<a href="image-detail.html"> <img src="/images/feedPhoto.jpg">
-					<div class="profile__photo-overlay">
-						<span class="profile__photo-stat"> <i class="fa fa-heart"></i>
-							504
-						</span> <span class="profile__photo-stat"> <i
-							class="fa fa-comment"></i> 22
-						</span>
-					</div>
-				</a>
-			</div>
-			<div class="profile__photo">
-				<a href="image-detail.html"> <img src="/images/feedPhoto.jpg">
-					<div class="profile__photo-overlay">
-						<span class="profile__photo-stat"> <i class="fa fa-heart"></i>
-							504
-						</span> <span class="profile__photo-stat"> <i
-							class="fa fa-comment"></i> 22
-						</span>
-					</div>
-				</a>
-			</div>
-		</div>
-	</div>
 </main>
 
 <div class="profile__overlay">

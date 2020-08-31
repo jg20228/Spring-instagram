@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -53,5 +54,6 @@ public class Image {
 	//요즘은 타임스탬프보다 로컬데이트를 많이씀
 	@CreationTimestamp
 	private Timestamp createDate;
+
 }
 
