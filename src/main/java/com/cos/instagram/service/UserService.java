@@ -119,16 +119,4 @@ public class UserService {
 				.build();
 		return userProfileRespDto;
 	}
-	
-	
-	////////
-	@Transactional
-	public void 팔로우(int id, LoginUser loginUser) {
-		followRepository.mSaveFollow(loginUser.getId(), id);
-	}
-	
-	@Transactional
-	public void 팔로우취소(int id, LoginUser loginUser) {
-		followRepository.mDeleteFollow(loginUser.getId(), id);
-	}
 }

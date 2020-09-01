@@ -1,22 +1,22 @@
 
-function follow(id) {
-	let url = "/follows/"+id;
-	fetch(url,{
-		method: "POST"
-    }).then(function(res){
-    	console.log(res);
-    	location.reload(true);
-		return res.text();							
+async function follow(id) {
+	let response = await fetch("/follows/"+id,{
+		method : "post"
 	});
+	
+	let result = await response.text();
+	if(result === "ok"){
+    	location.reload(true);
+	}
 }
 
-function unfollow(id) {
-	let url = "/follows/"+id;
-	fetch(url,{
-		method: "DELETE"
-    }).then(function(res){
-    	console.log(res);
-    	location.reload(true);
-		return res.text();							
+async function unfollow(id) {
+	let response = await fetch("/follows/" + id,{
+		method : "delete"
 	});
+	
+	let result = await response.text();
+	if(result === "ok"){
+    	location.reload(true);
+	}
 }

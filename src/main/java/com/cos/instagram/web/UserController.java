@@ -15,25 +15,18 @@ import com.cos.instagram.config.auth.LoginUserAnnotation;
 import com.cos.instagram.config.auth.dto.LoginUser;
 import com.cos.instagram.service.UserService;
 
+import lombok.RequiredArgsConstructor;
+
 @Controller
+@RequiredArgsConstructor
 public class UserController {
 	
-	@Autowired
-	private UserService userService;
-	
+	private final UserService userService;
+
+
 	@GetMapping("/user/{id}")
 	public String user(@PathVariable int id,@LoginUserAnnotation LoginUser loginUser, Model model) {
 		model.addAttribute("dto", userService.회원프로필(id, loginUser));
 		return "user/profile";
-	}
-	
-	@PostMapping("/follows/{id}")
-	public void insertFollow(@PathVariable int id,@LoginUserAnnotation LoginUser loginUser) {
-		userService.팔로우(id, loginUser);
-	}
-	
-	@DeleteMapping("/follows/{id}")
-	public void deleteFollow(@PathVariable int id,@LoginUserAnnotation LoginUser loginUser) {
-		userService.팔로우취소(id, loginUser);
 	}
 }
