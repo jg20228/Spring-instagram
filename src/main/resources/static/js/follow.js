@@ -1,26 +1,22 @@
-function follow(check, userId, i){
-	let url = "/follow/"+userId;
-	if(check){
-		fetch(url,{
-			method: "POST"
-	    }).then(function(res){
-			return res.text();							
-		}).then(function(res){
-			if(res === "ok"){
-				let follow_item_el = document.querySelector("#follow_item_"+i);
-				follow_item_el.innerHTML = `<button onClick="follow(false, ${userId}, ${i})" class="following_btn">팔로잉</button>`;
-			}
-		});
-	}else{
-		fetch(url,{
-			method: "DELETE"
-	    }).then(function(res){
-			return res.text();							
-		}).then(function(res){
-			if(res === "ok"){
-				let follow_item_el = document.querySelector("#follow_item_"+i);
-				follow_item_el.innerHTML = `<button onClick="follow(true, ${userId}, ${i})" class="follow_btn">팔로우</button>`;
-			}
-		});
-	}
+
+function follow(id) {
+	let url = "/follows/"+id;
+	fetch(url,{
+		method: "POST"
+    }).then(function(res){
+    	console.log(res);
+    	location.reload(true);
+		return res.text();							
+	});
+}
+
+function unfollow(id) {
+	let url = "/follows/"+id;
+	fetch(url,{
+		method: "DELETE"
+    }).then(function(res){
+    	console.log(res);
+    	location.reload(true);
+		return res.text();							
+	});
 }

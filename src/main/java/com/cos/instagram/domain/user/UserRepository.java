@@ -8,4 +8,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 //기본적인 CRUD를 가지고 있음
 public interface UserRepository extends JpaRepository<User, Integer>{
 	Optional<User> findByUsername(String username);
+	
 }

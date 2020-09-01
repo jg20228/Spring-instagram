@@ -17,12 +17,12 @@ import lombok.NoArgsConstructor;
 public class UserProfileRespDto {
 	
 	private boolean pageHost; //페이지의 주인 확인
+	private boolean followState; //true(팔로우 취소), false(팔로우)
 	
 	private User userEntity;
-	private List<Image> imageEntity;
+	private List<UserProfileImageRespDto> imageEntity;
 	
 	private int imageConut;
 	private int followerCount;
 	private int followingCount;
-	
 }
