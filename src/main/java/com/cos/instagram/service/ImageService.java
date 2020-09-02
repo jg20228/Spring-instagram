@@ -33,6 +33,11 @@ public class ImageService {
 	@Value("${file.path}")
 	private String uploadFolder;
 	
+	public List<Image> feed(int userId){
+		List<Image> images = imageRepository.mFeed(userId);
+		return images;
+	}
+	
 	@Transactional
 	public void 사진업로드(ImageReqDto imageReqDto, int userId) {
 		
