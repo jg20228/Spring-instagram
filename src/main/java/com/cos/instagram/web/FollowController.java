@@ -35,6 +35,7 @@ public class FollowController {
 		return new ResponseEntity<String>("ok",HttpStatus.OK);
 	}
 	
+<<<<<<< HEAD
 	@GetMapping("/follow/followingList/{userId}")
 	public String followingList(@PathVariable int userId,@LoginUserAnnotation LoginUser loginUser, Model model) {
 		//userId = 해당 페이지의  Id값 , loginUser = 로그인한 유저와 비교해야함!
@@ -44,6 +45,17 @@ public class FollowController {
 	
 	@GetMapping("/follow/followerList/{userId}")
 	public String followerList(@PathVariable int userId) {
+=======
+	@GetMapping("/follow/followingList/{pageUserId}")
+	public String followingList(@PathVariable int pageUserId,@LoginUserAnnotation LoginUser loginUser,Model model) {
+		model.addAttribute("dto", followService.팔로잉리스트(loginUser.getId(), pageUserId));
+		return "follow/following-list";
+	}
+	
+	@GetMapping("/follow/followerList/{pageUserId}")
+	public String followerList(@PathVariable int pageUserId,@LoginUserAnnotation LoginUser loginUser,Model model) {
+		model.addAttribute("dto", followService.팔로워리스트(loginUser.getId(), pageUserId));
+>>>>>>> 2ee98dd6607ae347ca76373fe5ad6bcf045d59ea
 		return "follow/follower-list";
 	}
 }

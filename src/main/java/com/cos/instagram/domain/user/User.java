@@ -19,7 +19,11 @@ import javax.persistence.Transient;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+<<<<<<< HEAD
 import com.cos.instagram.domain.follow.FollowingListRespDto;
+=======
+import com.cos.instagram.domain.follow.FollowRespDto;
+>>>>>>> 2ee98dd6607ae347ca76373fe5ad6bcf045d59ea
 import com.cos.instagram.domain.image.Image;
 import com.cos.instagram.web.dto.JoinReqDto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -28,6 +32,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+<<<<<<< HEAD
 @SqlResultSetMapping(
 		name = "FollowingListRespDtoMapping", 
 		classes = @ConstructorResult(
@@ -41,6 +46,23 @@ import lombok.NoArgsConstructor;
 		}
 	)
 )
+=======
+
+@SqlResultSetMapping(
+		name = "FollowRespDtoMapping",
+		classes = @ConstructorResult(
+				targetClass = FollowRespDto.class,
+				columns = {
+							@ColumnResult(name="id",type=Integer.class),
+							@ColumnResult(name="username",type=String.class),
+							@ColumnResult(name="name",type=String.class),
+							@ColumnResult(name="profileImage",type=String.class),
+							@ColumnResult(name="followState",type=Boolean.class),
+							@ColumnResult(name="equalUserState",type=Boolean.class),
+				}
+			)
+		)
+>>>>>>> 2ee98dd6607ae347ca76373fe5ad6bcf045d59ea
 @Entity
 @Data
 @NoArgsConstructor
