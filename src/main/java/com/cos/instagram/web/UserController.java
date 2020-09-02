@@ -29,4 +29,9 @@ public class UserController {
 		model.addAttribute("dto", userService.회원프로필(id, loginUser));
 		return "user/profile";
 	}
+	
+	@GetMapping("/user/profileEdit")
+	public String profileEdit(@LoginUserAnnotation LoginUser loginUser) {
+		return "user/profile-edit";
+	}
 }
