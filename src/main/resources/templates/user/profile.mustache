@@ -14,7 +14,6 @@
 				
 				{{^dto.pageHost}} <!-- 페이지의 주인은 팔로우가 나오면 안된다. -->		
 					{{#dto.followState}}
-
 					<a href="#">
 						<button onclick="unfollow({{dto.userEntity.id}})" class="profile_edit_btn">팔로우 취소</button>
 					</a>
@@ -26,6 +25,8 @@
 					</a>
 					{{/dto.followState}}
 				{{/dto.pageHost}}		
+				
+				
 				
 				{{#dto.pageHost}} <!--  페이지의 주인이면 -->
 					<a href="#">
@@ -41,12 +42,20 @@
 				
 			</div>
 			<ul class="profile__stats">
-				<li class="profile__stat"><span class="profile__stat-number">{{dto.imageConut}}</span>
-					posts</li>
-				<li class="profile__stat"><span class="profile__stat-number">{{dto.followerCount}}</span>
-					followers</li>
-				<li class="profile__stat"><span class="profile__stat-number">{{dto.followingCount}}</span>
-					following</li>
+				<li class="profile__stat">
+					<span class="profile__stat-number">{{dto.imageConut}}</span>
+						posts
+				</li>
+				
+				<li class="profile__stat">
+					<span class="profile__stat-number">{{dto.followerCount}}</span>
+						<a href="/follow/followerList/{{dto.userEntity.id}}">followers</a>
+				</li>
+				
+				<li class="profile__stat">
+					<span class="profile__stat-number">{{dto.followingCount}}</span>
+						<a href="/follow/followingList/{{dto.userEntity.id}}">following</a>
+				</li>
 			</ul>
 			<p class="profile__bio">
 				<span class="profile__fullname">
