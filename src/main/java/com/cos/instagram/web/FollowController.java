@@ -3,6 +3,7 @@ package com.cos.instagram.web;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,12 +36,14 @@ public class FollowController {
 	}
 	
 	@GetMapping("/follow/followingList/{userId}")
-	public String followingList(@PathVariable int userId) {
+	public String followingList(@PathVariable int userId,@LoginUserAnnotation LoginUser loginUser, Model model) {
+		//userId = 해당 페이지의  Id값 , loginUser = 로그인한 유저와 비교해야함!
+		model.addAttribute("dto", followService.팔로윙리스트(userId, loginUser.getId()));
 		return "follow/following-list";
 	}
 	
 	@GetMapping("/follow/followerList/{userId}")
 	public String followerList(@PathVariable int userId) {
-		return "follow/following-list";
+		return "follow/follower-list";
 	}
 }
