@@ -23,4 +23,9 @@ public class GlobalExceptionHandler {
 	public String myUsernameNotFoundException(Exception e) {
 		return Script.alert(e.getMessage());
 	};
+	
+	@ExceptionHandler(value = IllegalArgumentException.class)
+	public String myIllegalArgumentException(Exception e) {
+		return Script.alert(e.getMessage());
+	};
 }

@@ -2,6 +2,7 @@ package com.cos.instagram.domain.user;
 
 
 import java.sql.Timestamp;
+
 import java.util.List;
 
 import javax.persistence.Column;
@@ -19,11 +20,7 @@ import javax.persistence.Transient;
 
 import org.hibernate.annotations.CreationTimestamp;
 
-<<<<<<< HEAD
-import com.cos.instagram.domain.follow.FollowingListRespDto;
-=======
 import com.cos.instagram.domain.follow.FollowRespDto;
->>>>>>> 2ee98dd6607ae347ca76373fe5ad6bcf045d59ea
 import com.cos.instagram.domain.image.Image;
 import com.cos.instagram.web.dto.JoinReqDto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -32,24 +29,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-<<<<<<< HEAD
-@SqlResultSetMapping(
-		name = "FollowingListRespDtoMapping", 
-		classes = @ConstructorResult(
-				targetClass = FollowingListRespDto.class, 
-				columns = {
-		// 통계같은것 짤때 씀
-		@ColumnResult(name = "id", type = Integer.class), 
-		@ColumnResult(name = "name", type = String.class),
-		@ColumnResult(name = "username", type = String.class), 
-		@ColumnResult(name = "followState", type = String.class) 
-		}
-	)
-)
-=======
 
 @SqlResultSetMapping(
-		name = "FollowRespDtoMapping",
+		name = "FollowRespDtoMapping", //이 이름으로 NativeQuery를 쓸 수 있다.
 		classes = @ConstructorResult(
 				targetClass = FollowRespDto.class,
 				columns = {
@@ -62,7 +44,6 @@ import lombok.NoArgsConstructor;
 				}
 			)
 		)
->>>>>>> 2ee98dd6607ae347ca76373fe5ad6bcf045d59ea
 @Entity
 @Data
 @NoArgsConstructor
