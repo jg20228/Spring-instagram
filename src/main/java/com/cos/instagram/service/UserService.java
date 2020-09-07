@@ -136,7 +136,7 @@ public class UserService {
 		StringBuilder sb = new StringBuilder();
 		sb.append("select im.id, im.imageUrl, ");
 		sb.append("(select count(*) from likes lk where lk.imageId = im.id) as likeCount, "); //좋아요 수
-		sb.append("(select count(*) from comment ct where ct.image_id = im.id) as commentCount ");//댓글 수
+		sb.append("(select count(*) from comment ct where ct.imageId = im.id) as commentCount ");//댓글 수
 		sb.append(" from image im where im.userId = ? ");//댓글 수
 		
 		// 쿼리문 ? 대신에 변수를 넣으면 인젝션 공격을 받을 수 있음  
