@@ -2,8 +2,7 @@ package com.cos.instagram.service;
 
 
 import java.util.List;
-
-
+import java.util.Optional;
 import java.util.function.Supplier;
 
 import javax.persistence.ConstructorResult;
@@ -44,6 +43,17 @@ public class UserService {
 	private final UserRepository userRepository;
 	private final FollowRepository followRepository;
 	private final BCryptPasswordEncoder bCryptPasswordEncoder;
+	
+	public void 회원수정(User user) {
+		userRepository.updateByUser(user);
+	}
+	
+	
+	@Transactional
+	public Optional<User> 회원조회(int id) {
+		Optional<User> user = userRepository.findById(id);
+		return user;
+	}
 	
 	@Transactional//transactional의 타이밍, open in veiw를 생각하면 언제까지 유지되는지
 	public void 회원가입(JoinReqDto joinReqDto) {
