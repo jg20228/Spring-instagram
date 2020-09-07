@@ -1,4 +1,4 @@
-package com.cos.instagram.domain.user;
+package com.cos.instagram.web.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

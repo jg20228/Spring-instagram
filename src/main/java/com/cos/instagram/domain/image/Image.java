@@ -19,9 +19,11 @@ import javax.persistence.Transient;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.cos.instagram.domain.comment.Comment;
+import com.cos.instagram.domain.like.Likes;
 import com.cos.instagram.domain.tag.Tag;
 import com.cos.instagram.domain.user.User;
-import com.cos.instagram.domain.user.UserProfileImageRespDto;
+import com.cos.instagram.web.dto.UserProfileImageRespDto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
@@ -63,12 +65,25 @@ public class Image {
 
 	// Image를 select하면 여러개의 tag가 딸려옴.
 	@OneToMany(mappedBy = "image", fetch = FetchType.LAZY) // 규칙 - 연관관계 주인의 변수명을 적는다. 나는 FK가 아니다를 적어줘야함
-	@JsonIgnoreProperties({ "image" })
-	private List<Tag> tags;
-	// Insert할때 태그들을 한번에 넣는데 FK가 되면 안됨.
+	@JsonIgnoreProperties({ "image" })//Jackson한테 내리는 명령
+	private List<Tag> tags; // Insert할때 태그들을 한번에 넣는데 FK가 되면 안됨.
+	
+	@JsonIgnoreProperties({"image"})
+	@OneToMany(mappedBy = "image")
+	private List<Comment> comments;
+	
+	@JsonIgnoreProperties({"image"})
+	@OneToMany(mappedBy = "image")
+	private List<Likes> likes;
 
 	// 요즘은 타임스탬프보다 로컬데이트를 많이씀
 	@CreationTimestamp
 	private Timestamp createDate;
 
+	@Transient
+	private int likeCount;
+	
+	@Transient
+	private boolean likeState;
+	
 }

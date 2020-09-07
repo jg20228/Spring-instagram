@@ -1,8 +1,9 @@
-package com.cos.instagram.domain.user;
+package com.cos.instagram.web.dto;
 
 import java.util.List;
 
 import com.cos.instagram.domain.image.Image;
+import com.cos.instagram.domain.user.User;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

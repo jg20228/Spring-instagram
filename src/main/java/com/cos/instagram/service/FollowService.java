@@ -11,10 +11,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.cos.instagram.config.auth.dto.LoginUser;
 import com.cos.instagram.domain.follow.FollowRepository;
-import com.cos.instagram.domain.follow.FollowRespDto;
 import com.cos.instagram.domain.image.ImageRepository;
 import com.cos.instagram.domain.tag.TagRepository;
 import com.cos.instagram.domain.user.UserRepository;
+import com.cos.instagram.web.dto.FollowRespDto;
 
 import lombok.RequiredArgsConstructor;
 

@@ -22,11 +22,12 @@ public class ImageController {
 	
 	private final ImageService imageService;
 
-	@GetMapping({"","/","/image/feed"})
-	public String feed(@LoginUserAnnotation LoginUser loginUser,@Cos String cosDto) {
-		//메인페이지가 될것임
+	@GetMapping({"", "/", "/image/feed"})
+	public String feed(
+			@LoginUserAnnotation LoginUser loginUser,
+			Model model) {
 		System.out.println("loginUser : "+loginUser);
-		System.out.println("cos : "+cosDto);
+		model.addAttribute("images", imageService.feed(loginUser.getId()));
 		return "image/feed";
 	}
 	
@@ -48,7 +49,7 @@ public class ImageController {
 	
 	@GetMapping("/image/explore")
 	public String imageExplore(@LoginUserAnnotation LoginUser loginUser, Model model) {
-		List<Image> images = imageService.feed(loginUser.getId());
+		List<Image> images = imageService.인기사진(loginUser.getId());
 		model.addAttribute("dto", images);
 		return "image/explore";
 	}

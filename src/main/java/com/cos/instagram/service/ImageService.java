@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.cos.instagram.domain.image.Image;
 import com.cos.instagram.domain.image.ImageRepository;
+import com.cos.instagram.domain.like.Likes;
 import com.cos.instagram.domain.tag.Tag;
 import com.cos.instagram.domain.tag.TagRepository;
 import com.cos.instagram.domain.user.User;
@@ -33,9 +34,22 @@ public class ImageService {
 	@Value("${file.path}")
 	private String uploadFolder;
 	
-	public List<Image> feed(int userId){
-		List<Image> images = imageRepository.mFeed(userId);
+	public List<Image> feed(int loginUserId){
+		List<Image> images = imageRepository.mFeeds(loginUserId);
+		for (Image image : images) {
+			image.setLikeCount(image.getLikes().size());
+			for (Likes like : image.getLikes()) {
+				if(like.getUser().getId() == loginUserId) {
+					image.setLikeState(true);
+				}
+			}
+		}
 		return images;
+	}
+	
+	@Transactional(readOnly = true)
+	public List<Image> 인기사진(int loginUserId) {
+		return imageRepository.mNonFollowImage(loginUserId);
 	}
 	
 	@Transactional
