@@ -1,7 +1,6 @@
 package com.cos.instagram.domain.image;
 
 import java.sql.Timestamp;
-
 import java.util.List;
 
 import javax.persistence.ColumnResult;
@@ -79,7 +78,7 @@ public class Image {
 	// 요즘은 타임스탬프보다 로컬데이트를 많이씀
 	@CreationTimestamp
 	private Timestamp createDate;
-
+	
 	@Transient
 	private int likeCount;
 	

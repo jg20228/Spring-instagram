@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cos.instagram.config.auth.Cos;
 import com.cos.instagram.config.auth.LoginUserAnnotation;
@@ -22,13 +23,18 @@ public class ImageController {
 	
 	private final ImageService imageService;
 
-	@GetMapping({"", "/", "/image/feed"})
-	public String feed(
-			@LoginUserAnnotation LoginUser loginUser,
-			Model model) {
+	@GetMapping({"","/","/image/feed"})
+	public String feed(@LoginUserAnnotation LoginUser loginUser,Model model) {
+		//메인페이지가 될것임
 		System.out.println("loginUser : "+loginUser);
-		model.addAttribute("images", imageService.feed(loginUser.getId()));
+		model.addAttribute("images", imageService.피드사진(loginUser.getId()));
 		return "image/feed";
+	}
+	
+	@GetMapping("/test/image/feed")
+	public @ResponseBody List<Image> testFeed(@LoginUserAnnotation LoginUser loginUser) {
+		List<Image> images = imageService.피드사진(loginUser.getId());//한방쿼리로 만들면 일이 더 많음
+		return images;
 	}
 	
 	

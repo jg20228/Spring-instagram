@@ -2,6 +2,7 @@ package com.cos.instagram.domain.user;
 
 
 import java.sql.Timestamp;
+
 import java.util.List;
 
 import javax.persistence.Column;
@@ -30,7 +31,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @SqlResultSetMapping(
-		name = "FollowRespDtoMapping",
+		name = "FollowRespDtoMapping", //이 이름으로 NativeQuery를 쓸 수 있다.
 		classes = @ConstructorResult(
 				targetClass = FollowRespDto.class,
 				columns = {

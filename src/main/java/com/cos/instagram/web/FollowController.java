@@ -1,6 +1,7 @@
 package com.cos.instagram.web;
 
 import org.springframework.http.HttpStatus;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,15 +36,15 @@ public class FollowController {
 		return new ResponseEntity<String>("ok",HttpStatus.OK);
 	}
 	
-	@GetMapping("/follow/followingList/{pageUserId}")
-	public String followingList(@PathVariable int pageUserId,@LoginUserAnnotation LoginUser loginUser,Model model) {
-		model.addAttribute("dto", followService.팔로잉리스트(loginUser.getId(), pageUserId));
+	@GetMapping("/follow/followingList/{toUserId}")
+	public String followingList(@PathVariable int toUserId,@LoginUserAnnotation LoginUser loginUser,Model model) {
+		model.addAttribute("dto", followService.팔로잉리스트(loginUser.getId(), toUserId));
 		return "follow/following-list";
 	}
 	
-	@GetMapping("/follow/followerList/{pageUserId}")
-	public String followerList(@PathVariable int pageUserId,@LoginUserAnnotation LoginUser loginUser,Model model) {
-		model.addAttribute("dto", followService.팔로워리스트(loginUser.getId(), pageUserId));
+	@GetMapping("/follow/followerList/{toUserId}")
+	public String followerList(@PathVariable int toUserId,@LoginUserAnnotation LoginUser loginUser,Model model) {
+		model.addAttribute("dto", followService.팔로워리스트(loginUser.getId(), toUserId));
 		return "follow/follower-list";
 	}
 }

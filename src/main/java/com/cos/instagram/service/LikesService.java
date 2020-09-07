@@ -10,8 +10,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Service
 public class LikesService {
-	private final LikesRepository likesRepository;
 
+	private final LikesRepository likesRepository;
+	
 	@Transactional
 	public void 좋아요(int imageId, int loginUserId) {
 		likesRepository.mSave(imageId, loginUserId);

@@ -20,13 +20,13 @@ public class LikesController {
 	private final LikesService likesService;
 	
 	@PostMapping("/likes/{imageId}")
-	public ResponseEntity<?>  like(@PathVariable int imageId, @LoginUserAnnotation LoginUser loginUser) {
+	public ResponseEntity<?> likes(@PathVariable int imageId, @LoginUserAnnotation LoginUser loginUser){
 		likesService.좋아요(imageId, loginUser.getId());
 		return new ResponseEntity<String>("ok", HttpStatus.OK);
 	}
 	
 	@DeleteMapping("/likes/{imageId}")
-	public ResponseEntity<?> unLike(@PathVariable int imageId, @LoginUserAnnotation LoginUser loginUser) {
+	public ResponseEntity<?> unlikes(@PathVariable int imageId, @LoginUserAnnotation LoginUser loginUser){
 		likesService.싫어요(imageId, loginUser.getId());
 		return new ResponseEntity<String>("ok", HttpStatus.OK);
 	}

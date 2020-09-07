@@ -1,10 +1,14 @@
 package com.cos.instagram.domain.follow;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+
+import com.cos.instagram.domain.image.Image;
 
 public interface FollowRepository extends JpaRepository<Follow, Integer>{
 	//내가 만드는 함수는 m을 붙이고
@@ -33,4 +37,6 @@ public interface FollowRepository extends JpaRepository<Follow, Integer>{
 	@Modifying
 	@Query(value = "INSERT INTO follow(createDate, fromUserId, toUserId) VALUES(now(), ?1, ?2)",nativeQuery = true)
 	int mSaveFollow(int loginId, int pageUserId);
+	
+	
 }

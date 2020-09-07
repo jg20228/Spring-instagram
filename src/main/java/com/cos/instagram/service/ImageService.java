@@ -29,6 +29,21 @@ public class ImageService {
 	private final ImageRepository imageRepository;
 	private final TagRepository tagRepository;
 	private final UserRepository userRepository;
+
+	@Transactional(readOnly = true)
+	public List<Image> 피드사진(int loginUserId){
+		List<Image> images = imageRepository.mFeeds(loginUserId); 
+		for (Image image : images) {
+			image.setLikeCount(image.getLikes().size());
+			for (Likes like : image.getLikes()) {
+				if(like.getUser().getId()==loginUserId) {
+					image.setLikeState(true);
+				}
+			}
+		}
+		return images;
+	}
+	
 	
 	
 	@Value("${file.path}")
