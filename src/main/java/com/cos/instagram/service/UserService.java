@@ -1,32 +1,35 @@
 package com.cos.instagram.service;
 
 
+import java.io.IOException;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
-import java.util.Optional;
+import java.util.UUID;
 import java.util.function.Supplier;
 
-import javax.persistence.ConstructorResult;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import org.slf4j.Logger;
-
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.cos.instagram.config.auth.dto.LoginUser;
 import com.cos.instagram.config.handler.ex.MyUserIdNotFoundException;
 import com.cos.instagram.domain.follow.FollowRepository;
-import com.cos.instagram.domain.image.Image;
-import com.cos.instagram.domain.image.ImageRepository;
 import com.cos.instagram.domain.user.User;
-import com.cos.instagram.domain.user.UserProfileImageRespDto;
-import com.cos.instagram.domain.user.UserProfileRespDto;
 import com.cos.instagram.domain.user.UserRepository;
 import com.cos.instagram.web.dto.JoinReqDto;
+import com.cos.instagram.web.dto.UserProfileImageRespDto;
+import com.cos.instagram.web.dto.UserProfileRespDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -44,15 +47,57 @@ public class UserService {
 	private final FollowRepository followRepository;
 	private final BCryptPasswordEncoder bCryptPasswordEncoder;
 	
-	public void 회원수정(User user) {
-		userRepository.updateByUser(user);
-	}
-	
-	
+	@Value("${file.path}")
+	private String uploadFolder;
+
 	@Transactional
-	public Optional<User> 회원조회(int id) {
-		Optional<User> user = userRepository.findById(id);
-		return user;
+	public void 프로필사진업로드(LoginUser loginUser, MultipartFile file) {
+		UUID uuid = UUID.randomUUID();
+		String imageFilename = 
+				uuid+"_"+file.getOriginalFilename();
+		Path imageFilepath = Paths.get(uploadFolder+imageFilename);
+		try {
+			Files.write(imageFilepath, file.getBytes());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		User userEntity = userRepository.findById(loginUser.getId()).orElseThrow(new Supplier<MyUserIdNotFoundException>() {
+			@Override
+			public MyUserIdNotFoundException get() {
+				return new MyUserIdNotFoundException();
+			}
+		});
+
+		// 더티체킹
+		userEntity.setProfileImage(imageFilename);
+	}
+
+	@Transactional
+	public void 회원수정(User user) {
+		// 더티 체킹
+		User userEntity = userRepository.findById(user.getId()).orElseThrow(new Supplier<MyUserIdNotFoundException>() {
+			@Override
+			public MyUserIdNotFoundException get() {
+				return new MyUserIdNotFoundException();
+			}
+		});
+		userEntity.setName(user.getName());
+		userEntity.setWebsite(user.getWebsite());
+		userEntity.setBio(user.getBio());
+		userEntity.setPhone(user.getPhone());
+		userEntity.setGender(user.getGender());
+	}
+
+	@Transactional(readOnly = true)
+	public User 회원정보(LoginUser loginUser) {
+		return userRepository.findById(loginUser.getId())
+				.orElseThrow(new Supplier<MyUserIdNotFoundException>() {
+					@Override
+					public MyUserIdNotFoundException get() {
+						return new MyUserIdNotFoundException();
+					}
+				});
 	}
 	
 	@Transactional//transactional의 타이밍, open in veiw를 생각하면 언제까지 유지되는지
@@ -91,7 +136,7 @@ public class UserService {
 		StringBuilder sb = new StringBuilder();
 		sb.append("select im.id, im.imageUrl, ");
 		sb.append("(select count(*) from likes lk where lk.imageId = im.id) as likeCount, "); //좋아요 수
-		sb.append("(select count(*) from comment ct where ct.image_id = im.id) as commentCount ");//댓글 수
+		sb.append("(select count(*) from comment ct where ct.imageId = im.id) as commentCount ");//댓글 수
 		sb.append(" from image im where im.userId = ? ");//댓글 수
 		
 		// 쿼리문 ? 대신에 변수를 넣으면 인젝션 공격을 받을 수 있음  

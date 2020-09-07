@@ -15,7 +15,6 @@ import javax.persistence.SqlResultSetMapping;
 import org.hibernate.annotations.CreationTimestamp;
 
 import com.cos.instagram.domain.user.User;
-import com.cos.instagram.domain.user.UserProfileImageRespDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

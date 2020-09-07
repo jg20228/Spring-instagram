@@ -6,9 +6,7 @@
 			<img src="/images/avatar.jpg" /> 
 			<span class="photo__username">{{user.username}}</span>
 		</header>
-		<div class="photo_post_image"> <!-- 사진꽉채우기 css -->
-			<img src="/upload/{{imageUrl}}" />
-		</div>
+		<img src="/upload/{{#user.profileImage}}{{user.profileImage}}{{/user.profileImage}}" /> 
 		<div class="photo__info">
 			<div class="photo__actions">
 				<span class="photo__action">

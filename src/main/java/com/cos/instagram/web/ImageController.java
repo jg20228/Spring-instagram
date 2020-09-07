@@ -55,7 +55,7 @@ public class ImageController {
 	
 	@GetMapping("/image/explore")
 	public String imageExplore(@LoginUserAnnotation LoginUser loginUser, Model model) {
-		List<Image> images = imageService.feed(loginUser.getId());
+		List<Image> images = imageService.인기사진(loginUser.getId());
 		model.addAttribute("dto", images);
 		return "image/explore";
 	}

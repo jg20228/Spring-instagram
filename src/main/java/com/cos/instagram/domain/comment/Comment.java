@@ -34,10 +34,11 @@ public class Comment {
 	private String content;
 	
 	@ManyToOne // 댓글이 N 이미지가 1
+	@JoinColumn(name="imageId")
 	private Image image;
 	
 	@ManyToOne
-	@JoinColumn(name = "userId")
+	@JoinColumn(name="userId")
 	private User user;
 	
 	@CreationTimestamp

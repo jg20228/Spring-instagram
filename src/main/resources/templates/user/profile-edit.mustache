@@ -5,69 +5,69 @@
 
 		<header class="edit-profile__header">
 			<div class="fucker-container">
-				<img src="/images/avatar.jpg" />
+				<img src="/upload/{{#user.profileImage}}{{user.profileImage}}{{/user.profileImage}}" />
 			</div>
-			<!-- master comments -->                              
-			<h1 class="edit-profile__username">serranoarevalo</h1>
+			<h1 class="edit-profile__username">{{user.username}}</h1>
 		</header>
 
-		<form id="frm" class="edit-profile__form">
-			<input type="hidden" name="id"/>
-				<div class="edit-profile__row">
-					<label class="edit-profile__label" for="name">Name</label> 
-					<input name="name" type="text" value="Nicolás Serrano Arévalo">
-				</div>
-				<div class="edit-profile__row">
-					<label class="edit-profile__label" for="username">Username</label> 
-					<input id="username" type="text" readonly>
-				</div>
-				<div class="edit-profile__row">
-					<label class="edit-profile__label" for="website">Website</label> 
-					<input name="website" type="text">
-				</div>
-				<div class="edit-profile__row">
-					<label class="edit-profile__label" for="bio">Bio</label> 
-					<input name="bio" type="text">
-				</div>
-				<div class="edit-profile__row">
-					<label class="edit-profile__label" for="email">Email</label> 
-					<input type="email" readonly>
-				</div>
-				<div class="edit-profile__row">
-					<label class="edit-profile__label" for="phone-number">Phone Number</label> 
-					<input name="phone" type="text">
-				</div>
-				<div class="edit-profile__row">
-					<label class="edit-profile__label" for="gender">Gender</label> 
-					<select name="gender">
-						<option value="남">Male</option>
-						<option value="여" selected>Female</option>
-					</select>
-				</div>
-				<div class="edit-profile__row">
-					<span></span> <button onclick="userUpdate()" class="profile_follow_btn" type="button">회원 수정</button>
-				</div>
+		<form class="edit-profile__form">
+			<div class="edit-profile__row">
+				<label class="edit-profile__label" for="name">Name</label> 
+				<input
+					id="name" type="text" value="{{user.name}}">
+			</div>
+			<div class="edit-profile__row">
+				<label class="edit-profile__label" for="username">Username</label> 
+				<input type="text" value="{{user.username}}" readonly>
+			</div>
+			<div class="edit-profile__row">
+				<label class="edit-profile__label" for="website">Website</label> 
+				<input name="website" type="text" value="{{#user.website}}{{user.website}}{{/user.website}}">
+			</div>
+			<div class="edit-profile__row">
+				<label class="edit-profile__label" for="bio">Bio</label> 
+				<input name="bio" type="text" value="{{#user.bio}}{{user.bio}}{{/user.bio}}">
+			</div>
+			<div class="edit-profile__row">
+				<label class="edit-profile__label" for="email">Email</label> 
+				<input type="email" value="{{user.email}}" readonly>
+			</div>
+			<div class="edit-profile__row">
+				<label class="edit-profile__label" for="phone-number">Phone Number</label> 
+				<input name="phone" type="text" value="{{#user.phone}}{{user.phone}}{{/user.phone}}">
+			</div>
+			<div class="edit-profile__row">
+				<label class="edit-profile__label" for="gender">Gender</label> 
+				<input name="gender" type="text" value="{{#user.gender}}{{user.gender}}{{/user.gender}}">
+			</div>
+			<div class="edit-profile__row">
+				<span></span> 
+				<button onclick="userUpdate()" class="profile_follow_btn" type="button">
+					회원수정
+				</button>
+			</div>
 		</form>
 
 	</div>
 </main>
+
 <script>
 	function userUpdate(){
-		//from에 있는것들을 다 가져와서 x-www-form-urlencoded 시켜주는것
+		//from에 있는것들을 다 가져와서 x-www-form-urlencoded 시켜주는것		
 		let data = $("#frm").serialize();
-		console.log(1,data);
+		console.log(1, data);
 		
-		fetch("/user",{
-			method : "put",
-			body : data,
-			headers : {
-				"content-Type":"application/x-www-form-urlencoded; charset=utf-8"
+		fetch("/user", {
+			method: "put",
+			body: data,
+			headers: {
+				"Content-Type": "application/x-www-form-urlencoded; charset=utf-8"
 			}
 		}).then(function(res){
 			return res.text();
 		}).then(function(res){
 			alert("회원수정 성공");
-			location.href ="/user/1"
+			location.href = "/user/{{user.id}}";
 		});
 	}
 </script>

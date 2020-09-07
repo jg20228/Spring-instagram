@@ -1,18 +1,15 @@
 package com.cos.instagram.web;
 
-import java.util.Optional;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.cos.instagram.config.auth.LoginUserAnnotation;
 import com.cos.instagram.config.auth.dto.LoginUser;
@@ -35,15 +32,29 @@ public class UserController {
 	}
 	
 	@GetMapping("/user/profileEdit")
-	public String profileEdit(@LoginUserAnnotation LoginUser loginUser, Model model) {
-		Optional<User> user = userService.회원조회(loginUser.getId());
-		model.addAttribute("user", user);//이부분
+	public String profileEdit(
+			@LoginUserAnnotation LoginUser loginUser,
+			Model model) {
+		User userEntity = userService.회원정보(loginUser);
+		model.addAttribute("user", userEntity);
 		return "user/profile-edit";
 	}
-	
-	@PutMapping("/user/profileEidt")
-	public String profileEditProc(@LoginUserAnnotation LoginUser loginUser, User user) {
+
+	@PutMapping("/user")
+	public ResponseEntity<?> userUpdate(User user){
 		userService.회원수정(user);
-		return "user/profile";
+		return new ResponseEntity<String>("ok", HttpStatus.OK);
+	}
+
+	// 원래는 put으로 하는게 맞는데 편하게 하기 위해
+	@PostMapping("/user/profileUpload")
+	public String userProfileUpload(@RequestParam("profileImage") MultipartFile file,
+			int userId,
+			@LoginUserAnnotation LoginUser loginUser){
+		if(userId == loginUser.getId()) {
+			userService.프로필사진업로드(loginUser, file);
+		}
+
+		return "redirect:/user/"+userId;
 	}
 }
