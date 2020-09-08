@@ -10,7 +10,7 @@ async function follow(id) {
 	}
 }
 
-async function unFollow(id) {
+async function unfollow(id) {
 	let response = await fetch("/follows/" + id,{
 		method : "delete"
 	});

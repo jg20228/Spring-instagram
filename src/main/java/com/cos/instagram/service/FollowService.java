@@ -12,6 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.cos.instagram.config.auth.dto.LoginUser;
 import com.cos.instagram.domain.follow.FollowRepository;
 import com.cos.instagram.domain.follow.FollowingListRespDto;
+import com.cos.instagram.domain.noti.NotiRepository;
+import com.cos.instagram.domain.noti.NotiType;
 import com.cos.instagram.web.dto.FollowRespDto;
 
 import lombok.RequiredArgsConstructor;
@@ -24,6 +26,7 @@ public class FollowService {
 	@PersistenceContext
 	private EntityManager em;
 	private final FollowRepository followRepository;
+	private final NotiRepository notiRepository;
 
 	
 	public List<FollowRespDto> 팔로잉리스트(int loginUserId, int toUserId){
@@ -66,6 +69,7 @@ public class FollowService {
 	@Transactional
 	public void 팔로우(int id, LoginUser loginUser) {
 		int result = followRepository.mSaveFollow(loginUser.getId(), id);
+		notiRepository.mSave(loginUser.getId(), id, NotiType.FOLLOW.name());
 		System.out.println("팔로우 result :"+result);
 	}
 	

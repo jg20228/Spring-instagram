@@ -1,18 +1,18 @@
-package com.cos.instagram.domain.comment;
+package com.cos.instagram.domain.noti;
 
 import java.sql.Timestamp;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.Transient;
 
 import org.hibernate.annotations.CreationTimestamp;
 
-import com.cos.instagram.domain.image.Image;
 import com.cos.instagram.domain.user.User;
 
 import lombok.AllArgsConstructor;
@@ -25,25 +25,22 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Comment {
+public class Noti {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	//댓글은 이미지에 다는것이다.
-	private String content;
-	
-	@ManyToOne // 댓글이 N 이미지가 1
-	@JoinColumn(name="imageId")
-	private Image image;
+	@Enumerated(EnumType.STRING)
+	private NotiType notiType;
 	
 	@ManyToOne
-	@JoinColumn(name="userId")
-	private User user;
+	@JoinColumn(name="fromUserId")
+	private User fromUser;
+	
+	@ManyToOne
+	@JoinColumn(name="toUserId")
+	private User toUser;
 	
 	@CreationTimestamp
 	private Timestamp createDate;
-	
-	@Transient
-	private boolean commentHost;
 }

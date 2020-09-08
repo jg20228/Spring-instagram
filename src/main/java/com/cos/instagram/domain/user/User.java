@@ -1,4 +1,4 @@
-package com.cos.instagram.domain.user;
+ package com.cos.instagram.domain.user;
 
 
 import java.sql.Timestamp;

@@ -60,7 +60,7 @@
 			</ul>
 			<p class="profile__bio">
 				<span class="profile__fullname">
-					{{dto.userEntity.name}}
+					{{#dto.userEntity.name}}{{dto.userEntity.name}}{{/dto.userEntity.name}}
 				</span> 
 				
 				<span> <!-- null값이 있을까봐 -->

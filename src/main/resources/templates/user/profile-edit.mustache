@@ -5,16 +5,18 @@
 
 		<header class="edit-profile__header">
 			<div class="fucker-container">
-				<img src="/upload/{{#user.profileImage}}{{user.profileImage}}{{/user.profileImage}}" />
+				<img src="/upload/{{#user.profileImage}}{{user.profileImage}}{{/user.profileImage}}" 
+				onerror="this.src='/images/avatar.jpg'"/>
 			</div>
 			<h1 class="edit-profile__username">{{user.username}}</h1>
 		</header>
 
-		<form class="edit-profile__form">
+		<form id="frm" class="edit-profile__form">
+			<input type="hidden" name="id" value="{{user.id}}"/>
 			<div class="edit-profile__row">
 				<label class="edit-profile__label" for="name">Name</label> 
 				<input
-					id="name" type="text" value="{{user.name}}">
+					name="name" type="text" value="{{#user.name}}{{user.name}}{{/user.name}}">
 			</div>
 			<div class="edit-profile__row">
 				<label class="edit-profile__label" for="username">Username</label> 
@@ -30,7 +32,7 @@
 			</div>
 			<div class="edit-profile__row">
 				<label class="edit-profile__label" for="email">Email</label> 
-				<input type="email" value="{{user.email}}" readonly>
+				<input type="email" value="{{#user.email}}{{user.email}}{{/user.email}}" readonly>
 			</div>
 			<div class="edit-profile__row">
 				<label class="edit-profile__label" for="phone-number">Phone Number</label> 
@@ -42,7 +44,7 @@
 			</div>
 			<div class="edit-profile__row">
 				<span></span> 
-				<button onclick="userUpdate()" class="profile_follow_btn" type="button">
+				<button onclick="userUpdate({{user.id}})" class="profile_follow_btn" type="button">
 					회원수정
 				</button>
 			</div>
@@ -52,10 +54,10 @@
 </main>
 
 <script>
-	function userUpdate(){
+	function userUpdate(userId){
 		//from에 있는것들을 다 가져와서 x-www-form-urlencoded 시켜주는것		
 		let data = $("#frm").serialize();
-		console.log(1, data);
+		console.log(data);
 		
 		fetch("/user", {
 			method: "put",

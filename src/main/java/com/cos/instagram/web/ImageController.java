@@ -24,16 +24,21 @@ public class ImageController {
 	private final ImageService imageService;
 
 	@GetMapping({"","/","/image/feed"})
-	public String feed(@LoginUserAnnotation LoginUser loginUser,Model model) {
+	public String feed(
+			String tag,
+			@LoginUserAnnotation LoginUser loginUser,
+			Model model) {
 		//메인페이지가 될것임
 		System.out.println("loginUser : "+loginUser);
-		model.addAttribute("images", imageService.피드사진(loginUser.getId()));
+		model.addAttribute("images", imageService.피드사진(loginUser.getId(), tag));
 		return "image/feed";
 	}
 	
 	@GetMapping("/test/image/feed")
-	public @ResponseBody List<Image> testFeed(@LoginUserAnnotation LoginUser loginUser) {
-		List<Image> images = imageService.피드사진(loginUser.getId());//한방쿼리로 만들면 일이 더 많음
+	public @ResponseBody List<Image> testFeed(
+			String tag,
+			@LoginUserAnnotation LoginUser loginUser) {
+		List<Image> images = imageService.피드사진(loginUser.getId(), tag);//한방쿼리로 만들면 일이 더 많음
 		return images;
 	}
 	
@@ -50,11 +55,13 @@ public class ImageController {
 			ImageReqDto imageReqDto) {
 		System.out.println(imageReqDto);
 		imageService.사진업로드(imageReqDto, loginUser.getId());
-		return "redirect:/";
+		return "redirect:/user/"+loginUser.getId();
 	}
 	
 	@GetMapping("/image/explore")
-	public String imageExplore(@LoginUserAnnotation LoginUser loginUser, Model model) {
+	public String imageExplore(
+			@LoginUserAnnotation LoginUser loginUser, 
+			Model model) {
 		List<Image> images = imageService.인기사진(loginUser.getId());
 		model.addAttribute("dto", images);
 		return "image/explore";

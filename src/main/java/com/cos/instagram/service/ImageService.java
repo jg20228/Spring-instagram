@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.cos.instagram.domain.comment.Comment;
 import com.cos.instagram.domain.image.Image;
 import com.cos.instagram.domain.image.ImageRepository;
 import com.cos.instagram.domain.like.Likes;
@@ -31,13 +32,26 @@ public class ImageService {
 	private final UserRepository userRepository;
 
 	@Transactional(readOnly = true)
-	public List<Image> 피드사진(int loginUserId){
-		List<Image> images = imageRepository.mFeeds(loginUserId); 
+	public List<Image> 피드사진(int loginUserId, String tag){
+		List<Image> images = null;
+		if(tag == null || tag.equals("")) {
+			images = imageRepository.mFeeds(loginUserId);
+		}else {
+			images = imageRepository.mFeeds(tag);
+		}
+		
 		for (Image image : images) {
 			image.setLikeCount(image.getLikes().size());
 			for (Likes like : image.getLikes()) {
 				if(like.getUser().getId()==loginUserId) {
 					image.setLikeState(true);
+					
+				}
+			}
+			//댓글 주인 여부
+			for (Comment comment : image.getComments()) {
+				if(comment.getUser().getId() == loginUserId) {
+					comment.setCommentHost(true);
 				}
 			}
 		}
