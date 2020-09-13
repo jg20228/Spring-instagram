@@ -24,7 +24,6 @@ public class UserController {
 	
 	private final UserService userService;
 
-
 	@GetMapping("/user/{id}")
 	public String user(@PathVariable int id,@LoginUserAnnotation LoginUser loginUser, Model model) {
 		model.addAttribute("dto", userService.회원프로필(id, loginUser));
@@ -36,6 +35,7 @@ public class UserController {
 			@LoginUserAnnotation LoginUser loginUser,
 			Model model) {
 		User userEntity = userService.회원정보(loginUser);
+		System.out.println(userEntity);
 		model.addAttribute("user", userEntity);
 		return "user/profile-edit";
 	}
